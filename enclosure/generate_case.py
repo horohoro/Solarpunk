@@ -323,16 +323,16 @@ def generate_case(output_svg_path, output_dxf_path):
         label = f"PIN {idx+1}" if idx < 2 else "SPARE"
         svg.append(f'<text class="engrave" x="{pin_x + 5.5}" y="{pin_y - 2}" font-size="2.2" text-anchor="middle">{label}</text>')
 
-    # 9. Laser-Cut Spool Kit (Row 3, X ≈ 215 to 335 mm)
-    svg.append('<text class="engrave" x="270.0" y="190.0" font-size="3.2" font-weight="bold" text-anchor="middle">☀️ 28BYJ-48 SPOOL KIT (2x SPOOLS + WASHERS)</text>')
+    # 9. Laser-Cut Spool Kit (Row 3, X ≈ 215 to 265 mm)
+    svg.append('<text class="engrave" x="238.0" y="190.0" font-size="3.2" font-weight="bold" text-anchor="middle">☀️ 28BYJ-48 SPOOL KIT</text>')
 
-    # --- Spool 1 (Standard: 26mm Flange, 15mm Core) ---
+    # --- Precision Spool (26mm Flange, 15mm Core, 6mm Groove) ---
     c1_bx, c1_by = 224.0, 208.0
     svg.append(f'<circle class="cut" cx="{c1_bx}" cy="{c1_by}" r="13.0" />')
     svg.append(f'<path class="cut" d="{d_hole_svg(c1_bx, c1_by, 2.5, 1.5)}" />')
     svg.append(f'<circle class="cut" cx="{c1_bx - 8.5}" cy="{c1_by}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_bx + 8.5}" cy="{c1_by}" r="1.1" />')
-    svg.append(f'<text class="engrave" x="{c1_bx}" y="{c1_by - 6.5}" font-size="2.0" text-anchor="middle">SPOOL 1 BACK</text>')
+    svg.append(f'<text class="engrave" x="{c1_bx}" y="{c1_by - 6.5}" font-size="2.0" text-anchor="middle">SPOOL BACK</text>')
 
     c1_fx, c1_fy = 224.0, 242.0
     svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy}" r="13.0" />')
@@ -340,7 +340,7 @@ def generate_case(output_svg_path, output_dxf_path):
     svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy + 8.5}" r="1.25" />')
     svg.append(f'<circle class="cut" cx="{c1_fx - 8.5}" cy="{c1_fy}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_fx + 8.5}" cy="{c1_fy}" r="1.1" />')
-    svg.append(f'<text class="engrave" x="{c1_fx}" y="{c1_fy - 6.5}" font-size="2.0" text-anchor="middle">SPOOL 1 FRONT</text>')
+    svg.append(f'<text class="engrave" x="{c1_fx}" y="{c1_fy - 6.5}" font-size="2.0" text-anchor="middle">SPOOL FRONT</text>')
 
     w1_x, w1_y = 224.0, 267.0
     svg.append(f'<circle class="cut" cx="{w1_x}" cy="{w1_y}" r="4.5" />')
@@ -361,42 +361,6 @@ def generate_case(output_svg_path, output_dxf_path):
     svg.append(f'<circle class="cut" cx="{w2_x}" cy="{w2_y}" r="4.5" />')
     svg.append(f'<circle class="cut" cx="{w2_x}" cy="{w2_y}" r="2.75" />')
     svg.append(f'<text class="engrave" x="{w2_x}" y="{w2_y + 1.0}" font-size="1.5" text-anchor="middle">WASH</text>')
-
-    # --- Spool 2 (Deep Rim: 28mm Flange, 14mm Core, Snug D-fit) ---
-    c2_bx, c2_by = 282.0, 209.0
-    svg.append(f'<circle class="cut" cx="{c2_bx}" cy="{c2_by}" r="14.0" />')
-    svg.append(f'<path class="cut" d="{d_hole_svg(c2_bx, c2_by, 2.45, 1.45)}" />')
-    svg.append(f'<circle class="cut" cx="{c2_bx - 9.5}" cy="{c2_by}" r="1.1" />')
-    svg.append(f'<circle class="cut" cx="{c2_bx + 9.5}" cy="{c2_by}" r="1.1" />')
-    svg.append(f'<text class="engrave" x="{c2_bx}" y="{c2_by - 7.0}" font-size="2.0" text-anchor="middle">SPOOL 2 BACK</text>')
-
-    c2_fx, c2_fy = 282.0, 244.0
-    svg.append(f'<circle class="cut" cx="{c2_fx}" cy="{c2_fy}" r="14.0" />')
-    svg.append(f'<circle class="cut" cx="{c2_fx}" cy="{c2_fy}" r="1.6" />')
-    svg.append(f'<circle class="cut" cx="{c2_fx}" cy="{c2_fy + 9.5}" r="1.25" />')
-    svg.append(f'<circle class="cut" cx="{c2_fx - 9.5}" cy="{c2_fy}" r="1.1" />')
-    svg.append(f'<circle class="cut" cx="{c2_fx + 9.5}" cy="{c2_fy}" r="1.1" />')
-    svg.append(f'<text class="engrave" x="{c2_fx}" y="{c2_fy - 7.0}" font-size="2.0" text-anchor="middle">SPOOL 2 FRONT</text>')
-
-    w3_x, w3_y = 282.0, 269.0
-    svg.append(f'<circle class="cut" cx="{w3_x}" cy="{w3_y}" r="4.5" />')
-    svg.append(f'<circle class="cut" cx="{w3_x}" cy="{w3_y}" r="2.75" />')
-    svg.append(f'<text class="engrave" x="{w3_x}" y="{w3_y + 1.0}" font-size="1.5" text-anchor="middle">WASH</text>')
-
-    for idx, c_y in enumerate([203.0, 223.0, 243.0]):
-        core_x = 308.0
-        svg.append(f'<circle class="cut" cx="{core_x}" cy="{c_y}" r="7.0" />')
-        svg.append(f'<path class="cut" d="{d_hole_svg(core_x, c_y, 2.45, 1.45)}" />')
-        svg.append(f'<circle class="cut" cx="{core_x}" cy="{c_y + 4.5}" r="1.0" />')
-        svg.append(f'<circle class="cut" cx="{core_x - 4.8}" cy="{c_y}" r="1.1" />')
-        svg.append(f'<circle class="cut" cx="{core_x + 4.8}" cy="{c_y}" r="1.1" />')
-        lbl = f"CORE {idx+1}" if idx < 2 else "SPARE"
-        svg.append(f'<text class="engrave" x="{core_x}" y="{c_y - 4.0}" font-size="1.6" text-anchor="middle">{lbl}</text>')
-
-    w4_x, w4_y = 308.0, 269.0
-    svg.append(f'<circle class="cut" cx="{w4_x}" cy="{w4_y}" r="4.5" />')
-    svg.append(f'<circle class="cut" cx="{w4_x}" cy="{w4_y}" r="2.75" />')
-    svg.append(f'<text class="engrave" x="{w4_x}" y="{w4_y + 1.0}" font-size="1.5" text-anchor="middle">WASH</text>')
 
     svg.append('</svg>')
 
@@ -507,21 +471,21 @@ def generate_case(output_svg_path, output_dxf_path):
         dxf.text(pin_x, pin_y - 2, 2.2, lbl)
 
     # Spool Kit DXF
-    dxf.text(230.0, 190.0, 3.0, "28BYJ-48 SPOOL KIT")
+    dxf.text(220.0, 190.0, 3.0, "28BYJ-48 SPOOL KIT")
 
-    # Spool 1 (26mm OD)
+    # Spool (26mm OD, 15mm Core)
     dxf.circle(c1_bx, c1_by, 13.0)
     dxf.polyline(d_hole_dxf(c1_bx, c1_by, 2.5, 1.5))
     dxf.circle(c1_bx - 8.5, c1_by, 1.1)
     dxf.circle(c1_bx + 8.5, c1_by, 1.1)
-    dxf.text(c1_bx - 10, c1_by - 6.5, 2.0, "S1 BACK")
+    dxf.text(c1_bx - 10, c1_by - 6.5, 2.0, "SPOOL BACK")
 
     dxf.circle(c1_fx, c1_fy, 13.0)
     dxf.circle(c1_fx, c1_fy, 1.6)
     dxf.circle(c1_fx, c1_fy + 8.5, 1.25)
     dxf.circle(c1_fx - 8.5, c1_fy, 1.1)
     dxf.circle(c1_fx + 8.5, c1_fy, 1.1)
-    dxf.text(c1_fx - 10, c1_fy - 6.5, 2.0, "S1 FRONT")
+    dxf.text(c1_fx - 10, c1_fy - 6.5, 2.0, "SPOOL FRONT")
 
     dxf.circle(w1_x, w1_y, 4.5)
     dxf.circle(w1_x, w1_y, 2.75)
@@ -538,36 +502,6 @@ def generate_case(output_svg_path, output_dxf_path):
 
     dxf.circle(w2_x, w2_y, 4.5)
     dxf.circle(w2_x, w2_y, 2.75)
-
-    # Spool 2 (28mm OD)
-    dxf.circle(c2_bx, c2_by, 14.0)
-    dxf.polyline(d_hole_dxf(c2_bx, c2_by, 2.45, 1.45))
-    dxf.circle(c2_bx - 9.5, c2_by, 1.1)
-    dxf.circle(c2_bx + 9.5, c2_by, 1.1)
-    dxf.text(c2_bx - 10, c2_by - 7.0, 2.0, "S2 BACK")
-
-    dxf.circle(c2_fx, c2_fy, 14.0)
-    dxf.circle(c2_fx, c2_fy, 1.6)
-    dxf.circle(c2_fx, c2_fy + 9.5, 1.25)
-    dxf.circle(c2_fx - 9.5, c2_fy, 1.1)
-    dxf.circle(c2_fx + 9.5, c2_fy, 1.1)
-    dxf.text(c2_fx - 10, c2_fy - 7.0, 2.0, "S2 FRONT")
-
-    dxf.circle(w3_x, w3_y, 4.5)
-    dxf.circle(w3_x, w3_y, 2.75)
-
-    for idx, c_y in enumerate([203.0, 223.0, 243.0]):
-        core_x = 308.0
-        dxf.circle(core_x, c_y, 7.0)
-        dxf.polyline(d_hole_dxf(core_x, c_y, 2.45, 1.45))
-        dxf.circle(core_x, c_y + 4.5, 1.0)
-        dxf.circle(core_x - 4.8, c_y, 1.1)
-        dxf.circle(core_x + 4.8, c_y, 1.1)
-        lbl = f"C{idx+1}" if idx < 2 else "SP"
-        dxf.text(core_x - 4, c_y - 4.0, 1.6, lbl)
-
-    dxf.circle(w4_x, w4_y, 4.5)
-    dxf.circle(w4_x, w4_y, 2.75)
 
     dxf.save()
     print(f"Saved DXF to: {output_dxf_path}")

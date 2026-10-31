@@ -22,7 +22,7 @@ Designed for natural morning wake-ups by gently drawing your curtains at schedul
   - Parametrically generated in Python (`enclosure/generate_case.py`).
   - Sized strictly for standard **450 mm × 300 mm × 3.0 mm** wood / MDF sheets.
   - **Inset base tabs** preventing corner joint interference during assembly.
-  - **Custom 28BYJ-48 Wooden Spools**: Includes 2 complete 4-layer spools with exact 5.0 mm × 3.0 mm D-shaft keyways, anti-slip cord anchor holes, and 3mm motor spacer washers (no bobbins or 3D printer required).
+  - **Custom 28BYJ-48 Wooden Spool**: Includes a complete 4-layer spool with exact 5.0 mm × 3.0 mm D-shaft keyway, anti-slip cord anchor hole, and 3mm motor spacer washers (no bobbins or 3D printer required).
   - Sliding front service panel secured with low-profile gravity-hung T-pins (no screws needed to access the internals).
   - 4-point wardrobe screw mount ears for rock-solid stability.
   - Integrated cable divider acting as a mechanical backstop for the sliding front lid.
@@ -42,7 +42,7 @@ Designed for natural morning wake-ups by gently drawing your curtains at schedul
 | **Motor Screws** | 2 | M4 Machine Screws & Nuts (or M3.5/M4 self-tapping screws) |
 | **Power Supply** | 1 | 5V USB-C Power Adapter (min 1.5A) and USB-C Cable |
 | **Jumper Wires** | ~10 | Female-to-Female DuPont jumper wires |
-| **Drive Spool** | 2 | Included directly on the laser cut plank (exact 28BYJ-48 D-shaft fit) |
+| **Drive Spool** | 1 | Included directly on the laser cut plank (exact 28BYJ-48 D-shaft fit) |
 
 ---
 

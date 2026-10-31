@@ -42,8 +42,7 @@ This enclosure houses the **ESP32 DevKit**, the **28BYJ-48 Stepper Motor**, the 
   - **Dual Core Disks (2x 3mm wood = 6 mm groove width)**: 15 mm diameter barrels with matching D-shaft keyways. Together, they provide **6 mm of solid wood contact on the metal flats**, delivering tremendous torsional grip without stripping.
   - **Front Flange (3mm wood)**: 26 mm outer diameter with a 2.5 mm string-knot capture hole and a 3.2 mm center inspection hole.
   - **Toothpick Alignment Dowels**: All disks feature two 2.2 mm holes. Push standard toothpicks through the holes during glue-up to guarantee concentric alignment, then snip flush.
-  - **Spacer Washers (3mm wood)**: 9 mm OD / 5.5 mm ID washers that sit between the motor face and the spool, keeping the rotating spool safely 3 mm away from the box wall.
-  - **Spool 2 (High-Capacity 28mm Deep-Rim)**: A second complete spool set with a 28 mm rim and 14 mm core is also included for extra cord capacity.
+  - **Spacer Washers (3mm wood)**: 9 mm OD / 5.5 mm ID washers that sit between the motor face and the spool, keeping the rotating spool safely 3 mm away from the box wall. Includes 1 spare washer and 1 spare core disk.
 
 ---
 
