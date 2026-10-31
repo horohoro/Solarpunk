@@ -22,7 +22,7 @@ Designed for natural morning wake-ups by gently drawing your curtains at schedul
   - Parametrically generated in Python (`enclosure/generate_case.py`).
   - Sized strictly for standard **450 mm × 300 mm × 3.0 mm** wood / MDF sheets.
   - **Inset base tabs** preventing corner joint interference during assembly.
-  - **Custom 28BYJ-48 Wooden Spool**: Includes a complete 4-layer spool with exact 5.0 mm × 3.0 mm D-shaft keyway, anti-slip cord anchor hole, and 3mm motor spacer washers (no bobbins or 3D printer required).
+  - **Reversible 28BYJ-48 Wooden Spool**: Includes a complete 4-layer reversible spool with matching 5.0 mm × 3.0 mm D-shaft keyways on both flanges and cores, allowing inner or outer knot anchoring to minimize shaft bending stress.
   - Sliding front service panel secured with low-profile gravity-hung T-pins (no screws needed to access the internals).
   - 4-point wardrobe screw mount ears for rock-solid stability.
   - Integrated cable divider acting as a mechanical backstop for the sliding front lid.

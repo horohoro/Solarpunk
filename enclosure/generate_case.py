@@ -326,21 +326,24 @@ def generate_case(output_svg_path, output_dxf_path):
     # 9. Laser-Cut Spool Kit (Row 3, X ≈ 215 to 265 mm)
     svg.append('<text class="engrave" x="238.0" y="190.0" font-size="3.2" font-weight="bold" text-anchor="middle">☀️ 28BYJ-48 SPOOL KIT</text>')
 
-    # --- Precision Spool (26mm Flange, 15mm Core, 6mm Groove) ---
+    # --- Precision Spool (26mm Flange, 15mm Core, 6mm Groove, Reversible) ---
+    # Flange 1 (Symmetric)
     c1_bx, c1_by = 224.0, 208.0
     svg.append(f'<circle class="cut" cx="{c1_bx}" cy="{c1_by}" r="13.0" />')
     svg.append(f'<path class="cut" d="{d_hole_svg(c1_bx, c1_by, 2.5, 1.5)}" />')
+    svg.append(f'<circle class="cut" cx="{c1_bx}" cy="{c1_by + 8.5}" r="1.25" />')
     svg.append(f'<circle class="cut" cx="{c1_bx - 8.5}" cy="{c1_by}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_bx + 8.5}" cy="{c1_by}" r="1.1" />')
-    svg.append(f'<text class="engrave" x="{c1_bx}" y="{c1_by - 6.5}" font-size="2.0" text-anchor="middle">SPOOL BACK</text>')
+    svg.append(f'<text class="engrave" x="{c1_bx}" y="{c1_by - 6.5}" font-size="2.0" text-anchor="middle">FLANGE 1</text>')
 
+    # Flange 2 (Symmetric & Reversible)
     c1_fx, c1_fy = 224.0, 242.0
     svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy}" r="13.0" />')
-    svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy}" r="1.6" />')
+    svg.append(f'<path class="cut" d="{d_hole_svg(c1_fx, c1_fy, 2.5, 1.5)}" />')
     svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy + 8.5}" r="1.25" />')
     svg.append(f'<circle class="cut" cx="{c1_fx - 8.5}" cy="{c1_fy}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_fx + 8.5}" cy="{c1_fy}" r="1.1" />')
-    svg.append(f'<text class="engrave" x="{c1_fx}" y="{c1_fy - 6.5}" font-size="2.0" text-anchor="middle">SPOOL FRONT</text>')
+    svg.append(f'<text class="engrave" x="{c1_fx}" y="{c1_fy - 6.5}" font-size="2.0" text-anchor="middle">FLANGE 2</text>')
 
     w1_x, w1_y = 224.0, 267.0
     svg.append(f'<circle class="cut" cx="{w1_x}" cy="{w1_y}" r="4.5" />')
@@ -473,19 +476,20 @@ def generate_case(output_svg_path, output_dxf_path):
     # Spool Kit DXF
     dxf.text(220.0, 190.0, 3.0, "28BYJ-48 SPOOL KIT")
 
-    # Spool (26mm OD, 15mm Core)
+    # Spool (26mm OD, 15mm Core, Reversible)
     dxf.circle(c1_bx, c1_by, 13.0)
     dxf.polyline(d_hole_dxf(c1_bx, c1_by, 2.5, 1.5))
+    dxf.circle(c1_bx, c1_by + 8.5, 1.25)
     dxf.circle(c1_bx - 8.5, c1_by, 1.1)
     dxf.circle(c1_bx + 8.5, c1_by, 1.1)
-    dxf.text(c1_bx - 10, c1_by - 6.5, 2.0, "SPOOL BACK")
+    dxf.text(c1_bx - 10, c1_by - 6.5, 2.0, "FLANGE 1")
 
     dxf.circle(c1_fx, c1_fy, 13.0)
-    dxf.circle(c1_fx, c1_fy, 1.6)
+    dxf.polyline(d_hole_dxf(c1_fx, c1_fy, 2.5, 1.5))
     dxf.circle(c1_fx, c1_fy + 8.5, 1.25)
     dxf.circle(c1_fx - 8.5, c1_fy, 1.1)
     dxf.circle(c1_fx + 8.5, c1_fy, 1.1)
-    dxf.text(c1_fx - 10, c1_fy - 6.5, 2.0, "SPOOL FRONT")
+    dxf.text(c1_fx - 10, c1_fy - 6.5, 2.0, "FLANGE 2")
 
     dxf.circle(w1_x, w1_y, 4.5)
     dxf.circle(w1_x, w1_y, 2.75)

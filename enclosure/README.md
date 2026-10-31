@@ -38,11 +38,11 @@ This enclosure houses the **ESP32 DevKit**, the **28BYJ-48 Stepper Motor**, the 
 ### 7. Laser-Cut Precision Spool Kit (28BYJ-48 D-Shaft)
 - **The Issue with Sewing Bobbins**: Standard sewing bobbins have a 6.2 mm round hole and slip freely on the 5 mm motor shaft unless modified with tape or hot glue.
 - **The Solution**: Included right on the 450 × 300 mm sheet is a **complete 4-layer interlocking wooden spool kit**:
-  - **Back Flange (3mm wood)**: 26 mm outer diameter with an exact 5.0 mm × 3.0 mm D-shaft cutout that slides onto the motor shaft flats.
-  - **Dual Core Disks (2x 3mm wood = 6 mm groove width)**: 15 mm diameter barrels with matching D-shaft keyways. Together, they provide **6 mm of solid wood contact on the metal flats**, delivering tremendous torsional grip without stripping.
-  - **Front Flange (3mm wood)**: 26 mm outer diameter with a 2.5 mm string-knot capture hole and a 3.2 mm center inspection hole.
+  - **Symmetric Flanges (2x 3mm wood)**: Both outer flanges feature the exact 5.0 mm × 3.0 mm D-shaft keyway and knot capture holes. The spool is **100% reversible**—you can mount it in either direction.
+  - **Dual Core Disks (2x 3mm wood = 6 mm groove width)**: 15 mm diameter barrels with matching D-shaft keyways and cord pass-through holes. Together with the flanges, they provide full wood contact across the metal flats.
+  - **Bottom/Inner Knot Mounting (Reduced Shaft Torque)**: Anchoring the knot on the inside flange (nearest the motor face) keeps the pulling force close to the gearbox bearing, minimizing cantilever twisting/bending stress on the shaft.
   - **Toothpick Alignment Dowels**: All disks feature two 2.2 mm holes. Push standard toothpicks through the holes during glue-up to guarantee concentric alignment, then snip flush.
-  - **Spacer Washers (3mm wood)**: 9 mm OD / 5.5 mm ID washers that sit between the motor face and the spool, keeping the rotating spool safely 3 mm away from the box wall. Includes 1 spare washer and 1 spare core disk.
+  - **Spacer Washers (3mm wood)**: 9 mm OD / 5.5 mm ID washers that sit between the motor face and the spool, keeping the rotating spool safely 3 mm away from the box wall and giving room for the inner knot. Includes 1 spare washer and 1 spare core disk.
 
 ---
 
