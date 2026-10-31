@@ -331,7 +331,7 @@ def generate_case(output_svg_path, output_dxf_path):
     c1_bx, c1_by = 224.0, 208.0
     svg.append(f'<circle class="cut" cx="{c1_bx}" cy="{c1_by}" r="13.0" />')
     svg.append(f'<path class="cut" d="{d_hole_svg(c1_bx, c1_by, 2.5, 1.5)}" />')
-    svg.append(f'<circle class="cut" cx="{c1_bx}" cy="{c1_by + 5.0}" r="1.1" />')
+    svg.append(f'<circle class="cut" cx="{c1_bx}" cy="{c1_by + 9.5}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_bx - 5.0}" cy="{c1_by}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_bx + 5.0}" cy="{c1_by}" r="1.1" />')
     svg.append(f'<text class="engrave" x="{c1_bx}" y="{c1_by - 6.5}" font-size="2.0" text-anchor="middle">FLANGE 1</text>')
@@ -340,7 +340,7 @@ def generate_case(output_svg_path, output_dxf_path):
     c1_fx, c1_fy = 224.0, 242.0
     svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy}" r="13.0" />')
     svg.append(f'<path class="cut" d="{d_hole_svg(c1_fx, c1_fy, 2.5, 1.5)}" />')
-    svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy + 5.0}" r="1.1" />')
+    svg.append(f'<circle class="cut" cx="{c1_fx}" cy="{c1_fy + 9.5}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_fx - 5.0}" cy="{c1_fy}" r="1.1" />')
     svg.append(f'<circle class="cut" cx="{c1_fx + 5.0}" cy="{c1_fy}" r="1.1" />')
     svg.append(f'<text class="engrave" x="{c1_fx}" y="{c1_fy - 6.5}" font-size="2.0" text-anchor="middle">FLANGE 2</text>')
@@ -354,7 +354,6 @@ def generate_case(output_svg_path, output_dxf_path):
         core_x = 252.0
         svg.append(f'<circle class="cut" cx="{core_x}" cy="{c_y}" r="7.5" />')
         svg.append(f'<path class="cut" d="{d_hole_svg(core_x, c_y, 2.5, 1.5)}" />')
-        svg.append(f'<circle class="cut" cx="{core_x}" cy="{c_y + 5.0}" r="1.1" />')
         svg.append(f'<circle class="cut" cx="{core_x - 5.0}" cy="{c_y}" r="1.1" />')
         svg.append(f'<circle class="cut" cx="{core_x + 5.0}" cy="{c_y}" r="1.1" />')
         lbl = f"CORE {idx+1}" if idx < 2 else "SPARE"
@@ -479,14 +478,14 @@ def generate_case(output_svg_path, output_dxf_path):
     # Spool (26mm OD, 15mm Core, Reversible)
     dxf.circle(c1_bx, c1_by, 13.0)
     dxf.polyline(d_hole_dxf(c1_bx, c1_by, 2.5, 1.5))
-    dxf.circle(c1_bx, c1_by + 5.0, 1.1)
+    dxf.circle(c1_bx, c1_by + 9.5, 1.1)
     dxf.circle(c1_bx - 5.0, c1_by, 1.1)
     dxf.circle(c1_bx + 5.0, c1_by, 1.1)
     dxf.text(c1_bx - 10, c1_by - 6.5, 2.0, "FLANGE 1")
 
     dxf.circle(c1_fx, c1_fy, 13.0)
     dxf.polyline(d_hole_dxf(c1_fx, c1_fy, 2.5, 1.5))
-    dxf.circle(c1_fx, c1_fy + 5.0, 1.1)
+    dxf.circle(c1_fx, c1_fy + 9.5, 1.1)
     dxf.circle(c1_fx - 5.0, c1_fy, 1.1)
     dxf.circle(c1_fx + 5.0, c1_fy, 1.1)
     dxf.text(c1_fx - 10, c1_fy - 6.5, 2.0, "FLANGE 2")
@@ -498,7 +497,6 @@ def generate_case(output_svg_path, output_dxf_path):
         core_x = 252.0
         dxf.circle(core_x, c_y, 7.5)
         dxf.polyline(d_hole_dxf(core_x, c_y, 2.5, 1.5))
-        dxf.circle(core_x, c_y + 5.0, 1.1)
         dxf.circle(core_x - 5.0, c_y, 1.1)
         dxf.circle(core_x + 5.0, c_y, 1.1)
         lbl = f"C{idx+1}" if idx < 2 else "SP"
