@@ -18,10 +18,11 @@ Designed for natural morning wake-ups by gently drawing your curtains at schedul
   - Physical 12mm momentary push-button mounted to the side of the case for direct bedside toggle.
   - mDNS hostname discovery: navigate straight to `http://curtain.local` on your phone or laptop.
   - Over-The-Air (OTA) wireless firmware updates (`ArduinoOTA`).
-- **Precision Laser-Cut Enclosure:**
+- **Precision Laser-Cut Enclosure & Spool Kit:**
   - Parametrically generated in Python (`enclosure/generate_case.py`).
   - Sized strictly for standard **450 mm × 300 mm × 3.0 mm** wood / MDF sheets.
   - **Inset base tabs** preventing corner joint interference during assembly.
+  - **Custom 28BYJ-48 Wooden Spools**: Includes 2 complete 4-layer spools with exact 5.0 mm × 3.0 mm D-shaft keyways, anti-slip cord anchor holes, and 3mm motor spacer washers (no bobbins or 3D printer required).
   - Sliding front service panel secured with low-profile gravity-hung T-pins (no screws needed to access the internals).
   - 4-point wardrobe screw mount ears for rock-solid stability.
   - Integrated cable divider acting as a mechanical backstop for the sliding front lid.
@@ -41,7 +42,7 @@ Designed for natural morning wake-ups by gently drawing your curtains at schedul
 | **Motor Screws** | 2 | M4 Machine Screws & Nuts (or M3.5/M4 self-tapping screws) |
 | **Power Supply** | 1 | 5V USB-C Power Adapter (min 1.5A) and USB-C Cable |
 | **Jumper Wires** | ~10 | Female-to-Female DuPont jumper wires |
-| **Drive Spool** | 1 | 3D printed or laser-cut pulley/spool for curtain beaded chain/cord |
+| **Drive Spool** | 2 | Included directly on the laser cut plank (exact 28BYJ-48 D-shaft fit) |
 
 ---
 
@@ -166,10 +167,12 @@ This regenerates both `curtain_case_3mm.svg` and `curtain_case_3mm.dxf`.
 1. **Glue Base & Outer Ring:**
    - Glue the 4 vertical walls (Top, Bottom, Left with vents, Right with 12mm button hole) into a rectangular ring.
    - Drop the assembled wall ring into the base plate mortises. The inset base tabs guarantee clean 90° corners without joint interference.
-2. **Mount Hardware:**
+2. **Mount Hardware & Assemble Spool:**
    - Fasten the 28BYJ-48 motor to the top panel using 2x M4 screws through the 4.2mm holes.
    - Install the 12mm momentary push button into the side panel hole.
    - Secure the ULN2003 driver and ESP32 board in their designated zones using hot glue or small M2/M3 standoffs.
+   - Assemble the wooden spool: stack Back Flange, 2x Core Disks, and Front Flange with a thin layer of wood glue. Pass two standard toothpicks through the 2.2mm alignment holes to hold them concentric while the glue sets, then snip flush.
+   - Slide the 3mm spacer washer onto the motor shaft, followed by the assembled spool.
    - Insert the Internal Divider into its floor mortises to isolate cables from the drive mechanism.
 3. **Mount Enclosure to Wardrobe:**
    - Fix the box securely to the side or top of your closet using 4x M4 wood screws through the base plate corner ears.

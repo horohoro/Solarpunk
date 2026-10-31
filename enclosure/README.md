@@ -35,6 +35,16 @@ This enclosure houses the **ESP32 DevKit**, the **28BYJ-48 Stepper Motor**, the 
 ### 6. Motor Mount Screw Holes Enlarged for M4
 - Enlarged to **4.2 mm diameter** (`r = 2.1 mm`) for standard M4 screws with the accurate 8.0 mm shaft offset.
 
+### 7. Laser-Cut Precision Spool Kit (28BYJ-48 D-Shaft)
+- **The Issue with Sewing Bobbins**: Standard sewing bobbins have a 6.2 mm round hole and slip freely on the 5 mm motor shaft unless modified with tape or hot glue.
+- **The Solution**: Included right on the 450 × 300 mm sheet is a **complete 4-layer interlocking wooden spool kit**:
+  - **Back Flange (3mm wood)**: 26 mm outer diameter with an exact 5.0 mm × 3.0 mm D-shaft cutout that slides onto the motor shaft flats.
+  - **Dual Core Disks (2x 3mm wood = 6 mm groove width)**: 15 mm diameter barrels with matching D-shaft keyways. Together, they provide **6 mm of solid wood contact on the metal flats**, delivering tremendous torsional grip without stripping.
+  - **Front Flange (3mm wood)**: 26 mm outer diameter with a 2.5 mm string-knot capture hole and a 3.2 mm center inspection hole.
+  - **Toothpick Alignment Dowels**: All disks feature two 2.2 mm holes. Push standard toothpicks through the holes during glue-up to guarantee concentric alignment, then snip flush.
+  - **Spacer Washers (3mm wood)**: 9 mm OD / 5.5 mm ID washers that sit between the motor face and the spool, keeping the rotating spool safely 3 mm away from the box wall.
+  - **Spool 2 (High-Capacity 28mm Deep-Rim)**: A second complete spool set with a 28 mm rim and 14 mm core is also included for extra cord capacity.
+
 ---
 
 ## 📐 Laser Cut Parameters
@@ -57,6 +67,8 @@ flowchart TD
     B --> C["3. Assemble 4 Perimeter Walls into a Ring (Horizontal Tabs)"]
     C --> D["4. Drop 4-Wall Ring straight down into Base Plate (Inset Tabs)"]
     D --> E["5. Mount 28BYJ-48 Motor & 12mm Push Button"]
-    E --> F["6. Slide Front Plate (103.5 x 73.5mm) inside 4 walls"]
-    F --> G["7. Drop 2x T-Pins from Top to Bottom (Hang by Gravity)"]
+    E --> F["6. Assemble Wooden Spool: Glue 4 disks with toothpicks"]
+    F --> G["7. Slide Spacer Washer + Spool onto Motor D-Shaft"]
+    G --> H["8. Slide Front Plate (103.5 x 73.5mm) inside 4 walls"]
+    H --> I["9. Drop 2x T-Pins from Top to Bottom (Hang by Gravity)"]
 ```
