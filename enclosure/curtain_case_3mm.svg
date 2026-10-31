@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450mm" height="300mm" viewBox="0 0 450 300">
+<!-- 450 x 300 mm Plank. RED (#FF0000 0.1mm) = Cut, BLACK = Engrave -->
+<defs><style>
+  .cut { stroke: #ff0000; stroke-width: 0.1; fill: none; }
+  .engrave { fill: #000000; font-family: "Arial", sans-serif; }
+</style></defs>
+<path class="cut" d="M 33.0 15.0 L 143.0 15.0 L 161.0 21.0 L 161.0 89.0 L 143.0 95.0 L 33.0 95.0 L 15.0 89.0 L 15.0 21.0 Z" />
+<circle class="cut" cx="24.0" cy="31.0" r="2.1" />
+<circle class="cut" cx="24.0" cy="79.0" r="2.1" />
+<circle class="cut" cx="152.0" cy="31.0" r="2.1" />
+<circle class="cut" cx="152.0" cy="79.0" r="2.1" />
+<rect class="cut" x="33.0" y="92.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="33.0" y="15.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="64.42857142857143" y="92.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="64.42857142857143" y="15.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="95.85714285714286" y="92.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="95.85714285714286" y="15.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="127.28571428571428" y="92.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="127.28571428571428" y="15.0" width="15.714285714285714" height="3.0" rx="0.1" />
+<rect class="cut" x="33.0" y="32.0" width="3.0" height="18.0" rx="0.1" />
+<rect class="cut" x="33.0" y="60.0" width="3.0" height="18.0" rx="0.1" />
+<rect class="cut" x="140.0" y="32.0" width="3.0" height="18.0" rx="0.1" />
+<rect class="cut" x="140.0" y="60.0" width="3.0" height="18.0" rx="0.1" />
+<circle class="cut" cx="43.0" cy="42.0" r="1.5" />
+<circle class="cut" cx="73.0" cy="42.0" r="1.5" />
+<circle class="cut" cx="43.0" cy="68.0" r="1.5" />
+<circle class="cut" cx="73.0" cy="68.0" r="1.5" />
+<text class="engrave" x="58.0" y="56.0" font-size="3" text-anchor="middle">ULN2003 MOUNT</text>
+<rect class="cut" x="85.0" y="31.0" width="3.0" height="10.0" rx="0.1" />
+<rect class="cut" x="85.0" y="69.0" width="3.0" height="10.0" rx="0.1" />
+<text class="engrave" x="115.0" y="56.0" font-size="3.5" text-anchor="middle">ESP32 ZONE</text>
+<text class="engrave" x="88.0" y="25.0" font-size="3.8" text-anchor="middle">BASE (4x CLOSET SCREWS)</text>
+<rect class="cut" x="180.0" y="15.0" width="103.5" height="73.5" rx="1.0" />
+<text class="engrave" x="231.75" y="43.0" font-size="7.0" font-weight="bold" text-anchor="middle">☀️ SMART CURTAIN</text>
+<text class="engrave" x="231.75" y="55.0" font-size="3.8" text-anchor="middle">WAKE-UP AUTOMATION</text>
+<text class="engrave" x="231.75" y="66.0" font-size="3.0" text-anchor="middle">ESP32 • 28BYJ-48 • NTP CLOCK</text>
+<path class="cut" d="M 305.00 15.00 L 379.00 15.00 L 382.00 15.00 L 382.00 32.33 L 379.00 32.33 L 379.00 49.67 L 382.00 49.67 L 382.00 67.00 L 365.00 67.00 L 365.00 70.00 L 347.00 70.00 L 347.00 67.00 L 337.00 67.00 L 337.00 70.00 L 319.00 70.00 L 319.00 67.00 L 305.00 67.00 L 302.00 67.00 L 302.00 49.67 L 305.00 49.67 L 305.00 32.33 L 302.00 32.33 L 302.00 15.00 L 305.00 15.00 Z" />
+<rect class="cut" x="324.5" y="31.0" width="3.0" height="20.0" rx="1.5" />
+<rect class="cut" x="332.5" y="31.0" width="3.0" height="20.0" rx="1.5" />
+<rect class="cut" x="340.5" y="31.0" width="3.0" height="20.0" rx="1.5" />
+<rect class="cut" x="348.5" y="31.0" width="3.0" height="20.0" rx="1.5" />
+<rect class="cut" x="356.5" y="31.0" width="3.0" height="20.0" rx="1.5" />
+<text class="engrave" x="342.0" y="57.0" font-size="3.5" text-anchor="middle">LEFT (VENTS)</text>
+<path class="cut" d="M 15.00 110.00 L 125.00 110.00 L 122.00 110.00 L 122.00 127.33 L 125.00 127.33 L 125.00 144.67 L 122.00 144.67 L 122.00 162.00 L 125.00 162.00 L 125.00 165.00 L 125.00 165.00 L 109.29 165.00 L 109.29 162.00 L 109.29 162.00 L 93.57 162.00 L 93.57 165.00 L 93.57 165.00 L 77.86 165.00 L 77.86 162.00 L 77.86 162.00 L 62.14 162.00 L 62.14 165.00 L 62.14 165.00 L 46.43 165.00 L 46.43 162.00 L 46.43 162.00 L 30.71 162.00 L 30.71 165.00 L 30.71 165.00 L 15.00 165.00 L 15.00 162.00 L 15.00 162.00 L 18.00 162.00 L 18.00 144.67 L 15.00 144.67 L 15.00 127.33 L 18.00 127.33 L 18.00 110.00 L 15.00 110.00 Z" />
+<rect class="cut" x="20.25" y="112.0" width="5.5" height="3.5" rx="0.3" />
+<rect class="cut" x="114.25" y="112.0" width="5.5" height="3.5" rx="0.3" />
+<text class="engrave" x="23.0" y="118.5" font-size="2.0" text-anchor="middle">PIN 1</text>
+<text class="engrave" x="117.0" y="118.5" font-size="2.0" text-anchor="middle">PIN 2</text>
+<circle class="cut" cx="43.0" cy="128.0" r="5.0" />
+<circle class="cut" cx="25.5" cy="136.0" r="2.1" />
+<circle class="cut" cx="60.5" cy="136.0" r="2.1" />
+<text class="engrave" x="43.0" y="144.0" font-size="3" text-anchor="middle">28BYJ-48 MOTOR</text>
+<text class="engrave" x="43.0" y="149.0" font-size="2.4" text-anchor="middle">(M4 holes, 8mm offset)</text>
+<rect class="cut" x="94.5" y="150.0" width="14.0" height="10.0" rx="2.0" />
+<text class="engrave" x="101.5" y="146.0" font-size="3.0" text-anchor="middle">USB-C POWER</text>
+<text class="engrave" x="75.0" y="158.0" font-size="3.2" text-anchor="middle">TOP FACE (MOTOR + USB)</text>
+<path class="cut" d="M 145.00 110.00 L 255.00 110.00 L 252.00 110.00 L 252.00 127.33 L 255.00 127.33 L 255.00 144.67 L 252.00 144.67 L 252.00 162.00 L 255.00 162.00 L 255.00 165.00 L 255.00 165.00 L 239.29 165.00 L 239.29 162.00 L 239.29 162.00 L 223.57 162.00 L 223.57 165.00 L 223.57 165.00 L 207.86 165.00 L 207.86 162.00 L 207.86 162.00 L 192.14 162.00 L 192.14 165.00 L 192.14 165.00 L 176.43 165.00 L 176.43 162.00 L 176.43 162.00 L 160.71 162.00 L 160.71 165.00 L 160.71 165.00 L 145.00 165.00 L 145.00 162.00 L 145.00 162.00 L 148.00 162.00 L 148.00 144.67 L 145.00 144.67 L 145.00 127.33 L 148.00 127.33 L 148.00 110.00 L 145.00 110.00 Z" />
+<rect class="cut" x="150.25" y="112.0" width="5.5" height="3.5" rx="0.3" />
+<rect class="cut" x="244.25" y="112.0" width="5.5" height="3.5" rx="0.3" />
+<text class="engrave" x="153.0" y="118.5" font-size="2.0" text-anchor="middle">PIN 1</text>
+<text class="engrave" x="247.0" y="118.5" font-size="2.0" text-anchor="middle">PIN 2</text>
+<text class="engrave" x="200.0" y="152.0" font-size="3.5" text-anchor="middle">BOTTOM FACE (PIN PASS-THROUGH)</text>
+<path class="cut" d="M 280.00 110.00 L 354.00 110.00 L 357.00 110.00 L 357.00 127.33 L 354.00 127.33 L 354.00 144.67 L 357.00 144.67 L 357.00 162.00 L 340.00 162.00 L 340.00 165.00 L 322.00 165.00 L 322.00 162.00 L 312.00 162.00 L 312.00 165.00 L 294.00 165.00 L 294.00 162.00 L 280.00 162.00 L 277.00 162.00 L 277.00 144.67 L 280.00 144.67 L 280.00 127.33 L 277.00 127.33 L 277.00 110.00 L 280.00 110.00 Z" />
+<circle class="cut" cx="317.0" cy="138.0" r="6.1" />
+<text class="engrave" x="317.0" y="152.0" font-size="3.5" text-anchor="middle">BUTTON (12mm)</text>
+<path class="cut" d="M 15.0 185.0 L 89.0 185.0 L 89.0 228.5 L 76.0 228.5 L 76.0 231.5 L 66.0 231.5 L 66.0 228.5 L 38.0 228.5 L 38.0 231.5 L 28.0 231.5 L 28.0 228.5 L 15.0 228.5 Z" />
+<rect class="cut" x="41.0" y="193.0" width="22.0" height="14.0" rx="2.0" />
+<text class="engrave" x="52.0" y="213.0" font-size="3.0" text-anchor="middle">WIRE PASS-THROUGH</text>
+<text class="engrave" x="52.0" y="221.0" font-size="3.2" text-anchor="middle">DIVIDER (8.5mm BACKSTOP FOR LID)</text>
+<path class="cut" d="M 115.0 185.0 L 126.0 185.0 L 126.0 192.0 L 123.0 192.0 L 123.0 279.0 L 122.0 281.0 L 119.0 281.0 L 118.0 279.0 L 118.0 192.0 L 115.0 192.0 Z" />
+<circle class="cut" cx="120.5" cy="188.5" r="1.5" />
+<text class="engrave" x="120.5" y="183.0" font-size="2.2" text-anchor="middle">PIN 1</text>
+<path class="cut" d="M 145.0 185.0 L 156.0 185.0 L 156.0 192.0 L 153.0 192.0 L 153.0 279.0 L 152.0 281.0 L 149.0 281.0 L 148.0 279.0 L 148.0 192.0 L 145.0 192.0 Z" />
+<circle class="cut" cx="150.5" cy="188.5" r="1.5" />
+<text class="engrave" x="150.5" y="183.0" font-size="2.2" text-anchor="middle">PIN 2</text>
+<path class="cut" d="M 175.0 185.0 L 186.0 185.0 L 186.0 192.0 L 183.0 192.0 L 183.0 279.0 L 182.0 281.0 L 179.0 281.0 L 178.0 279.0 L 178.0 192.0 L 175.0 192.0 Z" />
+<circle class="cut" cx="180.5" cy="188.5" r="1.5" />
+<text class="engrave" x="180.5" y="183.0" font-size="2.2" text-anchor="middle">SPARE</text>
+</svg>

@@ -1,0 +1,23 @@
+# Private credentials & secrets
+secrets.h
+*.secrets
+
+# Local troubleshooting & test cuts
+HumanFixes/
+
+# Arduino / Platform build output
+build/
+*.bin
+*.elf
+*.hex
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
