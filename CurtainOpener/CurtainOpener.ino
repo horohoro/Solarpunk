@@ -70,8 +70,8 @@ Preferences prefs;
 int alarmHour = 7;
 int alarmMinute = 0;
 bool alarmEnabled = true;
-int curtainRevolutions = 16; // 16 revs with ~20mm bobbin ≈ 1.0 meter
-int slackRevolutions = 14;   // Default 14 revs: gives slack without overwinding in reverse
+int curtainRevolutions = 12; // 12 revs ≈ 0.75m (avoids fabric packing stall)
+int slackRevolutions = 10;   // Default 10 revs: leaves ~2 safety turns on spool
 int lastTriggeredDay = -1;
 
 WebServer server(80);
@@ -181,7 +181,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
       <input type="time" class="time-input" id="alarm-time" onchange="saveSettings()">
     </div>
     <div class="form-row">
-      <label>Pull Distance (Revs)<br><span style="font-size:12px; color:var(--muted);">16 revs ≈ 1 meter</span></label>
+      <label>Pull Distance (Revs)<br><span style="font-size:12px; color:var(--muted);">12 revs ≈ 0.75m (prevents bunching stall)</span></label>
       <input type="number" class="num-input" id="rotations" min="1" max="40" onchange="saveSettings()">
     </div>
     <div class="form-row" style="margin-bottom:0;">
@@ -341,7 +341,7 @@ void setup() {
   alarmHour = prefs.getInt("hour", 7);
   alarmMinute = prefs.getInt("min", 0);
   alarmEnabled = prefs.getBool("en", true);
-  curtainRevolutions = prefs.getInt("revs", 16);
+  curtainRevolutions = prefs.getInt("revs", 12);
   slackRevolutions = prefs.getInt("slack", max(0, curtainRevolutions - 2));
   Serial.printf("[INIT] Loaded settings -> Alarm: %02d:%02d, Enabled: %d, Revs: %d, Slack: %d\n",
                 alarmHour, alarmMinute, alarmEnabled, curtainRevolutions, slackRevolutions);
