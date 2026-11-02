@@ -60,6 +60,7 @@ MotorState motorState = STATE_IDLE;
 int stepIndex = 0;
 long currentStep = 0;
 long targetSteps = 0;
+long releaseTargetSteps = 0;
 unsigned long lastStepMicros = 0;
 unsigned long pauseStartMs = 0;
 const int STEP_DELAY_US = 1200; // Microseconds per half-step (~15 RPM)
@@ -70,6 +71,7 @@ int alarmHour = 7;
 int alarmMinute = 0;
 bool alarmEnabled = true;
 int curtainRevolutions = 16; // 16 revs with ~20mm bobbin ≈ 1.0 meter
+int slackRevolutions = 14;   // Default 14 revs: gives slack without overwinding in reverse
 int lastTriggeredDay = -1;
 
 WebServer server(80);
@@ -96,10 +98,12 @@ void stepMotor(bool forward) {
 void startCurtainCycle() {
   if (motorState != STATE_IDLE) return;
   targetSteps = (long)curtainRevolutions * 4096L;
+  releaseTargetSteps = (long)slackRevolutions * 4096L;
   currentStep = 0;
   motorState = STATE_OPENING;
   lastStepMicros = micros();
-  Serial.printf("[ACTION] Curtain cycle STARTED. Moving %d revolutions (%ld steps)...\n", curtainRevolutions, targetSteps);
+  Serial.printf("[ACTION] Curtain cycle STARTED. Pulling %d revs (%ld steps), Slack release %d revs (%ld steps)...\n",
+                curtainRevolutions, targetSteps, slackRevolutions, releaseTargetSteps);
 }
 
 void cancelCurtainCycle() {
@@ -176,9 +180,13 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
       <label>Wake-up Time (JST)</label>
       <input type="time" class="time-input" id="alarm-time" onchange="saveSettings()">
     </div>
-    <div class="form-row" style="margin-bottom:0;">
+    <div class="form-row">
       <label>Pull Distance (Revs)<br><span style="font-size:12px; color:var(--muted);">16 revs ≈ 1 meter</span></label>
       <input type="number" class="num-input" id="rotations" min="1" max="40" onchange="saveSettings()">
+    </div>
+    <div class="form-row" style="margin-bottom:0;">
+      <label>Slack Release (Revs)<br><span style="font-size:12px; color:var(--muted);">Unwind after pulling (0 to disable)</span></label>
+      <input type="number" class="num-input" id="slack" min="0" max="40" onchange="saveSettings()">
     </div>
   </div>
 </div>
@@ -212,6 +220,7 @@ function updateStatus() {
         document.getElementById('alarm-en').checked = d.alarm_en;
         document.getElementById('alarm-time').value = d.alarm_time;
         document.getElementById('rotations').value = d.rotations;
+        document.getElementById('slack').value = d.slack;
         window.loadedSettings = true;
       }
     });
@@ -222,7 +231,8 @@ function saveSettings() {
   const en = document.getElementById('alarm-en').checked;
   const time = document.getElementById('alarm-time').value;
   const rot = document.getElementById('rotations').value;
-  fetch(`/api/settings?en=${en}&time=${time}&rot=${rot}`, {method:'POST'});
+  const slack = document.getElementById('slack').value;
+  fetch(`/api/settings?en=${en}&time=${time}&rot=${rot}&slack=${slack}`, {method:'POST'});
 }
 setInterval(updateStatus, 1000);
 updateStatus();
@@ -258,7 +268,8 @@ void handleStatus() {
   json += "\"state\":\"" + stateStr + "\",";
   json += "\"alarm_en\":" + String(alarmEnabled ? "true" : "false") + ",";
   json += "\"alarm_time\":\"" + String(alarmStr) + "\",";
-  json += "\"rotations\":" + String(curtainRevolutions);
+  json += "\"rotations\":" + String(curtainRevolutions) + ",";
+  json += "\"slack\":" + String(slackRevolutions);
   json += "}";
 
   server.send(200, "application/json", json);
@@ -292,14 +303,21 @@ void handleSettings() {
       curtainRevolutions = r;
     }
   }
+  if (server.hasArg("slack")) {
+    int s = server.arg("slack").toInt();
+    if (s >= 0 && s <= 50) {
+      slackRevolutions = s;
+    }
+  }
 
   prefs.putInt("hour", alarmHour);
   prefs.putInt("min", alarmMinute);
   prefs.putBool("en", alarmEnabled);
   prefs.putInt("revs", curtainRevolutions);
+  prefs.putInt("slack", slackRevolutions);
 
-  Serial.printf("[SETTINGS SAVED] Alarm: %02d:%02d (Enabled: %d), Revs: %d\n",
-                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions);
+  Serial.printf("[SETTINGS SAVED] Alarm: %02d:%02d (Enabled: %d), Revs: %d, Slack: %d\n",
+                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions, slackRevolutions);
   server.send(200, "text/plain", "OK");
 }
 
@@ -324,8 +342,9 @@ void setup() {
   alarmMinute = prefs.getInt("min", 0);
   alarmEnabled = prefs.getBool("en", true);
   curtainRevolutions = prefs.getInt("revs", 16);
-  Serial.printf("[INIT] Loaded settings -> Alarm: %02d:%02d, Enabled: %d, Revs: %d\n",
-                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions);
+  slackRevolutions = prefs.getInt("slack", max(0, curtainRevolutions - 2));
+  Serial.printf("[INIT] Loaded settings -> Alarm: %02d:%02d, Enabled: %d, Revs: %d, Slack: %d\n",
+                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions, slackRevolutions);
 
   // Connect to Wi-Fi
   Serial.printf("[WIFI] Connecting to '%s'...\n", WIFI_SSID);
@@ -431,21 +450,33 @@ void loop() {
   server.handleClient();
   ArduinoOTA.handle();
 
-  // 1. Check Physical Button (Active LOW)
-  if (digitalRead(PIN_BUTTON) == LOW) {
-    delay(40); // Debounce
-    if (digitalRead(PIN_BUTTON) == LOW) {
-      if (motorState == STATE_IDLE) {
-        Serial.println("[BUTTON] Wardrobe button pressed -> Starting curtain cycle!");
-        startCurtainCycle();
-      } else {
-        Serial.println("[BUTTON] Pressed while moving -> Stopping motor!");
-        cancelCurtainCycle();
+  // 1. Check Physical Button (Active LOW) with non-blocking edge latch
+  // Behavior: Idle -> Press -> Running. Running -> Press -> Idle (immediate stop).
+  static int lastSteadyButtonState = HIGH;
+  static int lastFlickerableReading = HIGH;
+  static unsigned long lastDebounceTime = 0;
+  const unsigned long DEBOUNCE_DELAY_MS = 35;
+
+  int currentReading = digitalRead(PIN_BUTTON);
+  if (currentReading != lastFlickerableReading) {
+    lastDebounceTime = millis();
+    lastFlickerableReading = currentReading;
+  }
+
+  if ((millis() - lastDebounceTime) > DEBOUNCE_DELAY_MS) {
+    if (currentReading != lastSteadyButtonState) {
+      lastSteadyButtonState = currentReading;
+
+      // Trigger ONCE strictly on button PRESS (falling edge: HIGH -> LOW)
+      if (lastSteadyButtonState == LOW) {
+        if (motorState == STATE_IDLE) {
+          Serial.println("[BUTTON] Press detected -> Starting curtain cycle!");
+          startCurtainCycle();
+        } else {
+          Serial.println("[BUTTON] Press detected while running -> STOPPING IMMEDIATELY!");
+          cancelCurtainCycle();
+        }
       }
-      while (digitalRead(PIN_BUTTON) == LOW) {
-        delay(10);
-      }
-      delay(100);
     }
   }
 
@@ -475,10 +506,15 @@ void loop() {
       currentStep++;
       if (currentStep >= targetSteps) {
         currentStep = 0;
-        motorState = STATE_PAUSE;
-        pauseStartMs = millis();
-        stopMotor();
-        Serial.println("[CYCLE] Curtain fully open. Pausing 2 seconds before unspooling slack...");
+        if (slackRevolutions > 0) {
+          motorState = STATE_PAUSE;
+          pauseStartMs = millis();
+          stopMotor();
+          Serial.printf("[CYCLE] Curtain fully open (%d revs). Pausing 2s before releasing slack...\n", curtainRevolutions);
+        } else {
+          cancelCurtainCycle();
+          Serial.println("[CYCLE] Curtain fully open. Slack release disabled (0 revs). Motor stopped.");
+        }
       }
     }
   } else if (motorState == STATE_PAUSE) {
@@ -486,14 +522,14 @@ void loop() {
       motorState = STATE_RELEASING;
       currentStep = 0;
       lastStepMicros = micros();
-      Serial.println("[CYCLE] Unspooling string slack...");
+      Serial.printf("[CYCLE] Unspooling %d revs of string slack...\n", slackRevolutions);
     }
   } else if (motorState == STATE_RELEASING) {
     if (micros() - lastStepMicros >= STEP_DELAY_US) {
       lastStepMicros = micros();
       stepMotor(false); // Rotate reverse to give slack
       currentStep++;
-      if (currentStep >= targetSteps) {
+      if (currentStep >= releaseTargetSteps) {
         cancelCurtainCycle();
         Serial.println("[CYCLE] Completed! String is slack. Curtain is ready to be closed by hand at night.");
       }
