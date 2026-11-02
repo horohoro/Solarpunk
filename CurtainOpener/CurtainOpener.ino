@@ -60,7 +60,6 @@ MotorState motorState = STATE_IDLE;
 int stepIndex = 0;
 long currentStep = 0;
 long targetSteps = 0;
-long releaseTargetSteps = 0;
 unsigned long lastStepMicros = 0;
 unsigned long pauseStartMs = 0;
 const int STEP_DELAY_US = 1200; // Microseconds per half-step (~15 RPM)
@@ -71,7 +70,6 @@ int alarmHour = 7;
 int alarmMinute = 0;
 bool alarmEnabled = true;
 int curtainRevolutions = 12; // 12 revs ≈ 0.75m (avoids fabric packing stall)
-int slackRevolutions = 10;   // Default 10 revs: leaves ~2 safety turns on spool
 int lastTriggeredDay = -1;
 
 WebServer server(80);
@@ -98,12 +96,10 @@ void stepMotor(bool forward) {
 void startCurtainCycle() {
   if (motorState != STATE_IDLE) return;
   targetSteps = (long)curtainRevolutions * 4096L;
-  releaseTargetSteps = (long)slackRevolutions * 4096L;
   currentStep = 0;
   motorState = STATE_OPENING;
   lastStepMicros = micros();
-  Serial.printf("[ACTION] Curtain cycle STARTED. Pulling %d revs (%ld steps), Slack release %d revs (%ld steps)...\n",
-                curtainRevolutions, targetSteps, slackRevolutions, releaseTargetSteps);
+  Serial.printf("[ACTION] Curtain cycle STARTED. Moving %d revolutions (%ld steps)...\n", curtainRevolutions, targetSteps);
 }
 
 void cancelCurtainCycle() {
@@ -180,13 +176,9 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
       <label>Wake-up Time (JST)</label>
       <input type="time" class="time-input" id="alarm-time" onchange="saveSettings()">
     </div>
-    <div class="form-row">
-      <label>Pull Distance (Revs)<br><span style="font-size:12px; color:var(--muted);">12 revs ≈ 0.75m (prevents bunching stall)</span></label>
-      <input type="number" class="num-input" id="rotations" min="1" max="40" onchange="saveSettings()">
-    </div>
     <div class="form-row" style="margin-bottom:0;">
-      <label>Slack Release (Revs)<br><span style="font-size:12px; color:var(--muted);">Unwind after pulling (0 to disable)</span></label>
-      <input type="number" class="num-input" id="slack" min="0" max="40" onchange="saveSettings()">
+      <label>Curtain Distance (Revs)<br><span style="font-size:12px; color:var(--muted);">12 revs ≈ 0.75m (pull & unwind)</span></label>
+      <input type="number" class="num-input" id="rotations" min="1" max="40" onchange="saveSettings()">
     </div>
   </div>
 </div>
@@ -220,7 +212,6 @@ function updateStatus() {
         document.getElementById('alarm-en').checked = d.alarm_en;
         document.getElementById('alarm-time').value = d.alarm_time;
         document.getElementById('rotations').value = d.rotations;
-        document.getElementById('slack').value = d.slack;
         window.loadedSettings = true;
       }
     });
@@ -231,8 +222,7 @@ function saveSettings() {
   const en = document.getElementById('alarm-en').checked;
   const time = document.getElementById('alarm-time').value;
   const rot = document.getElementById('rotations').value;
-  const slack = document.getElementById('slack').value;
-  fetch(`/api/settings?en=${en}&time=${time}&rot=${rot}&slack=${slack}`, {method:'POST'});
+  fetch(`/api/settings?en=${en}&time=${time}&rot=${rot}`, {method:'POST'});
 }
 setInterval(updateStatus, 1000);
 updateStatus();
@@ -271,8 +261,7 @@ void handleStatus() {
   json += "\"state\":\"" + stateStr + "\",";
   json += "\"alarm_en\":" + String(alarmEnabled ? "true" : "false") + ",";
   json += "\"alarm_time\":\"" + String(alarmStr) + "\",";
-  json += "\"rotations\":" + String(curtainRevolutions) + ",";
-  json += "\"slack\":" + String(slackRevolutions);
+  json += "\"rotations\":" + String(curtainRevolutions);
   json += "}";
 
   server.send(200, "application/json", json);
@@ -306,21 +295,14 @@ void handleSettings() {
       curtainRevolutions = r;
     }
   }
-  if (server.hasArg("slack")) {
-    int s = server.arg("slack").toInt();
-    if (s >= 0 && s <= 50) {
-      slackRevolutions = s;
-    }
-  }
 
   prefs.putInt("hour", alarmHour);
   prefs.putInt("min", alarmMinute);
   prefs.putBool("en", alarmEnabled);
   prefs.putInt("revs", curtainRevolutions);
-  prefs.putInt("slack", slackRevolutions);
 
-  Serial.printf("[SETTINGS SAVED] Alarm: %02d:%02d (Enabled: %d), Revs: %d, Slack: %d\n",
-                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions, slackRevolutions);
+  Serial.printf("[SETTINGS SAVED] Alarm: %02d:%02d (Enabled: %d), Revs: %d\n",
+                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions);
   server.send(200, "text/plain", "OK");
 }
 
@@ -345,9 +327,8 @@ void setup() {
   alarmMinute = prefs.getInt("min", 0);
   alarmEnabled = prefs.getBool("en", true);
   curtainRevolutions = prefs.getInt("revs", 12);
-  slackRevolutions = prefs.getInt("slack", max(0, curtainRevolutions - 2));
-  Serial.printf("[INIT] Loaded settings -> Alarm: %02d:%02d, Enabled: %d, Revs: %d, Slack: %d\n",
-                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions, slackRevolutions);
+  Serial.printf("[INIT] Loaded settings -> Alarm: %02d:%02d, Enabled: %d, Revs: %d\n",
+                alarmHour, alarmMinute, alarmEnabled, curtainRevolutions);
 
   // Connect to Wi-Fi
   Serial.printf("[WIFI] Connecting to '%s'...\n", WIFI_SSID);
@@ -509,15 +490,10 @@ void loop() {
       currentStep++;
       if (currentStep >= targetSteps) {
         currentStep = 0;
-        if (slackRevolutions > 0) {
-          motorState = STATE_PAUSE;
-          pauseStartMs = millis();
-          stopMotor();
-          Serial.printf("[CYCLE] Curtain fully open (%d revs). Pausing 2s before releasing slack...\n", curtainRevolutions);
-        } else {
-          cancelCurtainCycle();
-          Serial.println("[CYCLE] Curtain fully open. Slack release disabled (0 revs). Motor stopped.");
-        }
+        motorState = STATE_PAUSE;
+        pauseStartMs = millis();
+        stopMotor();
+        Serial.printf("[CYCLE] Curtain fully open (%d revs). Pausing 2s before unwinding...\n", curtainRevolutions);
       }
     }
   } else if (motorState == STATE_PAUSE) {
@@ -525,16 +501,16 @@ void loop() {
       motorState = STATE_RELEASING;
       currentStep = 0;
       lastStepMicros = micros();
-      Serial.printf("[CYCLE] Unspooling %d revs of string slack...\n", slackRevolutions);
+      Serial.printf("[CYCLE] Unwinding exactly %d revs (zero net drift)...\n", curtainRevolutions);
     }
   } else if (motorState == STATE_RELEASING) {
     if (micros() - lastStepMicros >= STEP_DELAY_US) {
       lastStepMicros = micros();
       stepMotor(false); // Rotate reverse to give slack
       currentStep++;
-      if (currentStep >= releaseTargetSteps) {
+      if (currentStep >= targetSteps) {
         cancelCurtainCycle();
-        Serial.println("[CYCLE] Completed! String is slack. Curtain is ready to be closed by hand at night.");
+        Serial.println("[CYCLE] Completed! Symmetrical unwind finished. Zero drift.");
       }
     }
   }
