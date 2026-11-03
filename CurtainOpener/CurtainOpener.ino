@@ -483,9 +483,9 @@ void loop() {
     }
   }
 
-  // 2. Check Scheduled Morning Alarm (Every 1 second)
+  // 2. Check Scheduled Morning Alarm (Every 10 seconds)
   static unsigned long lastTimeCheck = 0;
-  if (millis() - lastTimeCheck >= 1000) {
+  if (millis() - lastTimeCheck >= 10000) {
     lastTimeCheck = millis();
     struct tm timeinfo;
     if (getLocalTime(&timeinfo, 50)) {
