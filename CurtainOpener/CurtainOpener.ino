@@ -71,6 +71,8 @@ int alarmMinute = 0;
 bool alarmEnabled = true;
 int curtainRevolutions = 12; // 12 revs ≈ 0.75m (avoids fabric packing stall)
 int lastTriggeredDay = -1;
+int lastTriggeredHour = -1;
+int lastTriggeredMinute = -1;
 
 WebServer server(80);
 
@@ -278,15 +280,25 @@ void handleStop() {
 }
 
 void handleSettings() {
+  bool alarmChanged = false;
   if (server.hasArg("en")) {
-    alarmEnabled = (server.arg("en") == "true");
+    bool en = (server.arg("en") == "true");
+    if (en != alarmEnabled) {
+      alarmEnabled = en;
+      alarmChanged = true;
+    }
   }
   if (server.hasArg("time")) {
     String t = server.arg("time");
     int colon = t.indexOf(':');
     if (colon > 0) {
-      alarmHour = t.substring(0, colon).toInt();
-      alarmMinute = t.substring(colon + 1).toInt();
+      int h = t.substring(0, colon).toInt();
+      int m = t.substring(colon + 1).toInt();
+      if (h != alarmHour || m != alarmMinute) {
+        alarmHour = h;
+        alarmMinute = m;
+        alarmChanged = true;
+      }
     }
   }
   if (server.hasArg("rot")) {
@@ -294,6 +306,13 @@ void handleSettings() {
     if (r >= 1 && r <= 50) {
       curtainRevolutions = r;
     }
+  }
+
+  // Re-arm trigger whenever alarm time or state is modified
+  if (alarmChanged) {
+    lastTriggeredDay = -1;
+    lastTriggeredHour = -1;
+    lastTriggeredMinute = -1;
   }
 
   prefs.putInt("hour", alarmHour);
@@ -464,17 +483,22 @@ void loop() {
     }
   }
 
-  // 2. Check Scheduled Morning Alarm (Every 10 seconds check)
+  // 2. Check Scheduled Morning Alarm (Every 1 second)
   static unsigned long lastTimeCheck = 0;
-  if (millis() - lastTimeCheck >= 10000) {
+  if (millis() - lastTimeCheck >= 1000) {
     lastTimeCheck = millis();
     struct tm timeinfo;
     if (getLocalTime(&timeinfo, 50)) {
       if (alarmEnabled && motorState == STATE_IDLE) {
         if (timeinfo.tm_hour == alarmHour && timeinfo.tm_min == alarmMinute) {
-          if (timeinfo.tm_mday != lastTriggeredDay) {
+          bool alreadyFired = (timeinfo.tm_mday == lastTriggeredDay &&
+                               timeinfo.tm_hour == lastTriggeredHour &&
+                               timeinfo.tm_min == lastTriggeredMinute);
+          if (!alreadyFired) {
             lastTriggeredDay = timeinfo.tm_mday;
-            Serial.printf("[ALARM] Morning alarm matched (%02d:%02d JST)! Opening curtain...\n", alarmHour, alarmMinute);
+            lastTriggeredHour = timeinfo.tm_hour;
+            lastTriggeredMinute = timeinfo.tm_min;
+            Serial.printf("[ALARM] Scheduled alarm matched (%02d:%02d JST)! Opening curtain...\n", alarmHour, alarmMinute);
             startCurtainCycle();
           }
         }
